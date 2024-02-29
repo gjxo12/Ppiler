@@ -7,7 +7,7 @@ void yyerror(const char *str)
 	fprintf(stderr,"error: %s\n",str);
 }
  
-int yywrap()
+int yywrap() // 다른 파일로부터 계속적인 읽기를 수행할때
 {
 	return 1;
 } 
@@ -33,13 +33,14 @@ command:
 heat_switch:
 	TOKHEAT STATE
 	{
-		printf("\tHeat turned on or off\n");
+		if($2) printf("\tHeat turned on\n");
+		else printf("\tHeat turned off\n");
 	}
 	;
 
 target_set:
 	TOKTARGET TOKTEMPERATURE NUMBER
 	{
-		printf("\tTemperature set\n");
+		printf("\tTemperature set %d\n", $3);
 	}
 	;
